@@ -1,5 +1,5 @@
 Bot_Name = 'Jack'
-Bot_hash = 'XXXX-XXXX-XXXX-XXXX-XXXX'
+Bot_hash = 'XXXX-XXXX-XXXX-XXXX-XXXX-XXXX'
 
 BD_IP = '127.0.0.1'
 BD_Port = '5432'
