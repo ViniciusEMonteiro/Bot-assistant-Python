@@ -1,2 +1,4 @@
-# Don't sincronize file config
+# Don't sincronize file conficat .git/info/exclude
+.config
+config
 /config
