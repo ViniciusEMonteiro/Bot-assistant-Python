@@ -1,8 +1,8 @@
-Bot_Name = 'Jack'
-Bot_hash = 'TESTE'
-
-BD_IP = '127.0.0.1'
-BD_Port = '5432'
-BD_Name = 'Jack_BD'
-BD_User = 'Jack'
-BD_Pass = 'Secret'
+[Develop configuration]
+Bot_Name = Jack
+Bot_hash = TESTE
+BD_IP = 127.0.0.1
+BD_Port = 5432
+BD_Name = jack_bd
+BD_User = jack
+BD_Pass = Secret

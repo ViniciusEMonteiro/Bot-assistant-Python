@@ -11,7 +11,7 @@
 Install the dependencies:
 ```sh
 sudo apt-get install python-dev python-pip
-pip install telepot
+pip install telepot psycopg2 configparser matplotlib pip psycopg2-binary
 ```
 
 Clone the aplication:
