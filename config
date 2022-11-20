@@ -1,8 +1,8 @@
 [Develop configuration]
-Bot_Name = Jack
-Bot_hash = TESTE
+Bot_Name = MiniArthurBot
+Bot_hash = 5697412144:AAHUonJiPby-k8_GOXHKPqAzh2RTfUm5Fso
 BD_IP = 127.0.0.1
 BD_Port = 5432
-BD_Name = jack_bd
-BD_User = jack
-BD_Pass = Secret
+BD_Name = labra_db
+BD_User = arthur
+BD_Pass = 8PY4nSAiT0DT

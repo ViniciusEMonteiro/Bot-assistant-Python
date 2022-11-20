@@ -5,16 +5,16 @@ import json
 import socket
 import sys
 import datetime
-import thread
-import pyaudio
+import _thread
+
 import struct
-import ConfigParser
+import configparser
 import psycopg2
 
 from telepot.loop import MessageLoop
 from configparser import ConfigParser
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
-import matplotlib.pyplot as plt
+
 from array import array
 import numpy as np
 
@@ -46,7 +46,7 @@ try:
 	conn = psycopg2.connect(host=BD_IP, port=BD_Port, database=BD_Name, user=BD_User, password=BD_Pass)
 	cursor = conn.cursor()
 
-	cursor.execute(str("CREATE TABLE IF NOT EXISTS public.table_user (id serial PRIMARY KEY NOT NULL,name TEXT,id_type_user INT);"))
+	cursor.execute(str("CREATE TABLE IF NOT EXISTS public.table_user (id BIGINT PRIMARY KEY NOT NULL,name TEXT,id_type_user INT);"))
 	cursor.execute(str("CREATE TABLE IF NOT EXISTS public.table_type_user (id serial PRIMARY KEY NOT NULL,name TEXT);"))
 	cursor.execute(str("CREATE TABLE IF NOT EXISTS public.table_service (id serial PRIMARY KEY NOT NULL,name TEXT,help TEXT,host TEXT,port INT,id_type_service INT,token TEXT);"))
 	cursor.execute(str("CREATE TABLE IF NOT EXISTS public.table_type_service (id serial PRIMARY KEY NOT NULL,Name TEXT);"))
@@ -56,10 +56,10 @@ try:
 	print('Conected!')
 
 except (Exception, psycopg2.DatabaseError) as error:
-    print('ERRO: ') 
-    print(error)
-    cursor.close()
-    exit()
+	print('ERRO: ') 
+	print(error)
+	cursor.close()
+	exit()
 
 def handle(msg):
 	global userName, chat_id, text, confirmFlag
@@ -69,42 +69,41 @@ def handle(msg):
 
 	if('text' in msg):
 		text = msg['text']
-        print ("Mensagem recebida: " + text)
+	print('Mensagem recebida: ' + text + ' - Usuario: ' + str(chat_id))
 
-        cursor.execute(str("SELECT EXISTS(SELECT 1 FROM public.table_user WHERE id = {} )".format(chat_id)))
-        clienteExiste, = cursor.fetchone()
-        cursor.execute(str("SELECT EXISTS(SELECT 1 FROM public.table_user WHERE id = {} AND name IS NULL)".format(chat_id)))
-        clienteHasName, = cursor.fetchone()
-    
-        if not clienteExiste:
-            cursor.execute(str("INSERT INTO public.table_user (id) VALUES ({})".format(chat_id)))
-            conn.commit()
-            bot.sendMessage(chat_id, "Insira o seu nome para acesso ao sistema: ")
-                                                                                                
-        elif clienteHasName:
-            userName = text.encode('utf-8')
-            print (userName)
+	cursor.execute(str("SELECT EXISTS(SELECT 1 FROM public.table_user WHERE id = {} )".format(chat_id)))
+	clienteExiste, = cursor.fetchone()
+	cursor.execute(str("SELECT EXISTS(SELECT 1 FROM public.table_user WHERE id = {} AND name IS NULL)".format(chat_id)))
+	clienteHasName, = cursor.fetchone()
 
-            cursor.execute(str("UPDATE public.table_user SET name = {}, id_type_user = {} WHERE id = {}".format(str("\'{}\'".format(userName)), 1, chat_id)))
-            conn.commit()
-            bot.sendMessage(chat_id, '{}, seu cadastro foi realizado com sucesso! Obrigado!'.format(userName), 
-                reply_markup=ReplyKeyboardMarkup(
-                    keyboard=[[KeyboardButton(text=u'A')], [KeyboardButton(text=u'B')], [KeyboardButton(text=u'C')]]))
-        
-        elif text == u'A':
-        	print('Teste A')
-        	bot.sendMessage(chat_id, "A de Amor")
+	if not clienteExiste:
+		cursor.execute(str("INSERT INTO public.table_user (id) VALUES ({})".format(chat_id)))
+		conn.commit()
+		bot.sendMessage(chat_id, "Insira o seu nome para acesso ao sistema: ")
+	elif clienteHasName:
 
-        elif text == u'B':
-        	print('Teste B')
-        	bot.sendMessage(chat_id, "B de Baixinho")
+		print (userName)
 
-        elif text == u'C':
-        	print('Teste C')
-        	bot.sendMessage(chat_id, "C de Coracao")
+		cursor.execute(str("UPDATE public.table_user SET name = {}, id_type_user = {} WHERE id = {}".format(str("\'{}\'".format(userName)), 1, chat_id)))
+		conn.commit()
+		bot.sendMessage(chat_id, '{}, seu cadastro foi realizado com sucesso! Obrigado!'.format(userName), 
+			reply_markup=ReplyKeyboardMarkup(
+				keyboard=[[KeyboardButton(text=u'A')], [KeyboardButton(text=u'B')], [KeyboardButton(text=u'C')]]))
 
-        else:
-        	print('Oh No!')
+	elif text == u'A':
+		print('Teste A')
+		bot.sendMessage(chat_id, "A de Amor")
+
+	elif text == u'B':
+		print('Teste B')
+		bot.sendMessage(chat_id, "B de Baixinho")
+
+	elif text == u'C':
+		print('Teste C')
+		bot.sendMessage(chat_id, "C de Coracao")
+
+	else:
+		print('Oh No!')
 
 MessageLoop(bot,handle).run_as_thread()
 
