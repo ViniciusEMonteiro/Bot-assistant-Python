@@ -35,6 +35,15 @@ Or create a service to run:
 
 ```
 
+Create file config:
+Bot_Name = Teste
+Bot_hash = Teste
+BD_IP = 127.0.0.1
+BD_Port = 5432
+BD_Name = teste_bd
+BD_User = teste
+BD_Pass = Secret
+
 ### Aplication
 
 ```mermaid

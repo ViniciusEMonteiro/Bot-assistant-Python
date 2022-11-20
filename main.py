@@ -81,7 +81,7 @@ def handle(msg):
 		conn.commit()
 		bot.sendMessage(chat_id, "Insira o seu nome para acesso ao sistema: ")
 	elif clienteHasName:
-
+		userName = text
 		print (userName)
 
 		cursor.execute(str("UPDATE public.table_user SET name = {}, id_type_user = {} WHERE id = {}".format(str("\'{}\'".format(userName)), 1, chat_id)))
