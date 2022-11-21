@@ -32,10 +32,37 @@ nohup python main.py &
 
 Or create a service to run:
 ```sh
-
+nano /lib/systemd/system/meu-script.service
 ```
 
-Create file config:
+```sh
+Unit]
+Description=Script para inciar o Bot
+Wants=network-online.target
+After=network.target
+
+[Service]
+Type=simple
+User=labra
+WorkingDirectory=/seu/diretorio
+ExecStart=/seu/diretorio/Bot-assistant-Python/main.py
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```sh
+sudo systemctl daemon-reload
+sudo systemctl start meu-script
+sudo systemctl status meu-script
+sudo systemctl enable meu-script
+```
+
+And create config file:
+
+```sh
 Bot_Name = Teste
 Bot_hash = Teste
 BD_IP = 127.0.0.1
@@ -44,27 +71,9 @@ BD_Name = teste_bd
 BD_User = teste
 BD_Pass = Secret
 
-### Aplication
-
-```mermaid
-graph LR
-Message_NEW(New Message)--> Valid_User{Is a User?}
-Valid_User -- No --> Action_Create((Create User)) 
-Action_Create --> Tab_User[Table User]
-Valid_User -- Yes --> Tab_User
-Action_Create -- Welcome --> Message_Response(Message to user)
-Tab_User -- ID --> Tab_Language[Table Language]
-Message_NEW -- Message --> Tab_Language
-Tab_Language -- I don't undertand --> Message_Response
-Tab_Language -- Undertand --> Tab_Alias[Table Alias]
-Tab_Alias -- Values --> Tab_Request[Table Request]
-Tab_Alias --> Tab_Service[Table Service]
-Tab_Service --> Tab_Request
-Tab_Request --> Action_HTTP((Send HTTP)) 
-Action_HTTP -- Response --> Message_Response
 ```
 
-License
+### LICENSE
 ----
 
 * [GNU GENERAL PUBLIC LICENSE](https://github.com/ViniciusEMonteiro/Bot-assistant-Python/blob/master/LICENSE)

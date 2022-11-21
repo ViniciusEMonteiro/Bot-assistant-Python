@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+import os
 import telepot
 import time
 import sqlite3
@@ -23,8 +25,9 @@ userName = None
 chat_id = None
 text = None
 
+cwd = os.getcwd()
 config_file = ConfigParser()
-config_file.read('config')
+config_file.read(cwd+'/config')
 
 Bot_Name=config_file.get('Develop configuration','Bot_Name')
 Bot_hash=config_file.get('Develop configuration', 'Bot_hash')
