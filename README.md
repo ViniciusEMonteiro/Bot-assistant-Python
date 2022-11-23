@@ -10,9 +10,10 @@
 
 Install the dependencies:
 ```sh
-sudo apt-get install python-dev python-pip
+sudo apt-get install python-dev python-pip libcblas-dev libhdf5-dev libhdf5-serial-dev libatlas-base-dev libjasper-dev  libqtgui4  libqt4-test
 pip install telepot psycopg2 configparser matplotlib pip psycopg2-binary opencv-python
 ```
+
 
 Clone the aplication:
 ```sh
