@@ -172,7 +172,7 @@ while 1:
 
 	if clienteExiste:
 
-		cap = cv2.VideoCapture(0)
+		cap = cv2.VideoCapture(-1)
 
 		cursor.execute(str("SELECT id FROM public.table_user WHERE monitoramento = True"))
 
